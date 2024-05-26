@@ -1,0 +1,8 @@
+<suite name ="testing">
+    <test name = "sample4">
+        <parameter name = "userPicker" value ="sybin.xerox+18@gmail.com"/>
+        <classes>
+            <class name = "org.example.AIgen" />
+        </classes>
+  </test>
+</suite>
