@@ -18,8 +18,8 @@ import org.testng.asserts.SoftAssert;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.time.Duration;
+import java.util.List;
 
 public class Auditlogs {
 
@@ -324,6 +324,7 @@ public void TC03(String testUser,String testEmail) throws InterruptedException {
          softAssert.assertEquals(accessDetails, "Desktop, Edge 126.0.0.0");
          String ss8 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
          test.addScreenCaptureFromBase64String(ss8);
+         //rwae
        }
  }}
 
