@@ -2700,7 +2700,7 @@ public class Audit_logs {
     @Test(priority = 30)
     @Parameters({"testUser"})
     public void TC30(String testUser) throws InterruptedException {
-        test = extent.createTest("TC30: Verify whether audit logs is generated for experience export", "Verify whether audit logs is generated for experience export").info("user Details" + testUser);
+        test = extent.createTest("TC30: Verify whether audit logs is generated for experience export feature", "Verify whether audit logs is generated for experience export").info("user Details" + testUser);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(35));
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.navigate().to("https://carear-us-qa.web.app/#/admin/instruct-experience");
