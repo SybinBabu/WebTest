@@ -2727,22 +2727,20 @@ public class Audit_logs {
         Thread.sleep(15000);
         WebElement closeIcon = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='OnboardingTipsDialog_closeIcon__oqjbk']")));
         closeIcon.click();
+        Thread.sleep(3000);
         WebElement publish = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//button[contains(@class,'MuiButtonBase-root')])[2]")));
         publish.click();
-        Thread.sleep(7000);
+        Thread.sleep(9000);
         WebElement closeicon2 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span[class='PublishExperienceSuccessDialog_closeIcon__bmK3D']")));
         closeicon2.click();
-        WebElement langSelector = driver.findElement(By.xpath("//span[contains(@class,'LanguageSelector_langName__')]"));
-        langSelector.click();
-        WebElement addTranslation = driver.findElement(By.xpath("//span[contains(text(),'Add translation')]"));
-        addTranslation.click();
-        WebElement translation = driver.findElement(By.xpath("//span[contains(text(),'ADD TRANSLATION')]"));
-        translation.click();
-        WebElement toast = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(text(),'New translation has been added!')]")));
-        String expString = toast.getText();
-        Assert.assertEquals(expString, "New translation has been added! Text content was auto translated.");
+        WebElement hamburger = driver.findElement(By.id("editor-menu-button"));
+        hamburger.click();
+        WebElement export = driver.findElement(By.xpath("//span[text()='Export']"));
+        export.click();
         Thread.sleep(2000);
-        publish.click();
+        WebElement exportPopup = driver.findElement(By.xpath("//span[text()='EXPORT']"));
+        exportPopup.click();
+        Thread.sleep(2000);
         driver.switchTo().window(parentWindow);
         driver.navigate().to("https://carear-us-qa.web.app/#/admin/company");
         WebElement auditLog = driver.findElement(By.xpath("//h6[text()='Audit Logs']"));
@@ -2750,21 +2748,21 @@ public class Audit_logs {
         Thread.sleep(15000);
 
         test = extent.createTest("Step02", "Verify whether date and day is displayed or not");
-        WebElement date = driver.findElement(By.xpath("(//div[@class='style_date__UsvaQ'])[2]"));
+        WebElement date = driver.findElement(By.xpath("(//div[@class='style_date__UsvaQ'])[1]"));
         boolean dateStatus = date.isDisplayed();
         Assert.assertTrue(dateStatus);
         String ss3 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
         test.addScreenCaptureFromBase64String(ss3);
         //
         test = extent.createTest("Step03", "Verify whether time is displayed or not");
-        WebElement time = driver.findElement(By.xpath("(//div[@class='style_dateTime__I2bxo'])[2]"));
+        WebElement time = driver.findElement(By.xpath("(//div[@class='style_dateTime__I2bxo'])[1]"));
         boolean timeStatus = time.isDisplayed();
         Assert.assertTrue(timeStatus);
         String ss4 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
         test.addScreenCaptureFromBase64String(ss4);
         //
         test = extent.createTest("Step04", "Verify whether username is displayed or not");
-        WebElement user = driver.findElement(By.xpath("(//tbody//tr//td[2]//div)[2]"));
+        WebElement user = driver.findElement(By.xpath("(//tbody//tr//td[2]//div)[1]"));
         if (user.getText().contains(testUser)) {
             String username = user.getText();
             softAssert.assertEquals(username, testUser);
@@ -2774,17 +2772,17 @@ public class Audit_logs {
         WebElement eventWait = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//tbody//tr//td[3]//div)[1]")));
         //
         test = extent.createTest("Step06", "Verify whether event category is displayed as Experiences");
-        WebElement event = driver.findElement(By.xpath("(//tbody//tr//td[3]//div)[2]"));
+        WebElement event = driver.findElement(By.xpath("(//tbody//tr//td[3]//div)[1]"));
         String eventString = event.getText();
         Assert.assertEquals(eventString, "Experiences");
         String ss6 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
         test.addScreenCaptureFromBase64String(ss6);
 
         //
-        test = extent.createTest("Step07", "Verify whether event description is displayed as Experience published");
-        WebElement eventDescription = driver.findElement(By.xpath("(//td[contains(text(),'Experience copied')])[1]"));
+        test = extent.createTest("Step07", "Verify whether event description is displayed as Experience exported");
+        WebElement eventDescription = driver.findElement(By.xpath("(//td[contains(text(),'Experience exported')])[1]"));
         String expectedDescription = eventDescription.getText();
-        Assert.assertEquals(expectedDescription, "Experience copied: " + name);
+        Assert.assertEquals(expectedDescription, "Experience exported: " +name);
         String ss7 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
         test.addScreenCaptureFromBase64String(ss7);
 
