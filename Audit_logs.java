@@ -2715,7 +2715,7 @@ public class Audit_logs {
             }
         System.out.println(driver.getCurrentUrl());
         Thread.sleep(8000);
-        test = extent.createTest("Step01: Verify whether user is able to add translation to an experience");
+        test = extent.createTest("Step01: Verify whether user is able to export an experience");
         WebElement expName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("experienceName")));
         String name = "ExportExp";
         expName.sendKeys(name);
