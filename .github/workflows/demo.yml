@@ -1,8 +1,0 @@
-name: demo
-'on': push
-jobs: null
-   my-job:
-     runs-on: ubuntu-latest
-     steps: null
-      '-name': my-step
-        run: echo "hello world"
