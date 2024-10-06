@@ -4,14 +4,14 @@ name: unit-test
 on:
 workflow_dispatch: 
 branches:
-        -master
+        - master
 
 jobs:
 build:
 runs-on: ubuntu-latest
 
 steps:
--name: Start Selenoid server
+- name: Start Selenoid server
 uses: n-ton4/selenoid-github-action@master
 id: start-selenoid
 continue-on-error: false
@@ -21,7 +21,7 @@ args: -limit 10
 browser: Edge
 last-versions: 1
 
--name: checkout
+- name: checkout
 - uses: actions/checkout@v2
 with:
 fetch-depth: 0
