@@ -2797,4 +2797,104 @@ public class Audit_logs {
 
 
     }
+    @Test(priority = 31)
+    @Parameters({"testUser"})
+    public void TC31(String testUser) throws InterruptedException {
+        test = extent.createTest("TC31: Verify whether audit logs is generated for experience access change", "Verify whether audit logs is generated for experience access change").info("user Details" + testUser);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(35));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        driver.navigate().to("https://carear-us-qa.web.app/#/admin/instruct-experience");
+        Thread.sleep(12000);
+        WebElement addNew = driver.findElement(By.xpath("//button[text()='Add New']"));
+        addNew.click();
+        String parentWindow = driver.getWindowHandle();
+        Set<String> childWindows = driver.getWindowHandles();
+        if (!childWindows.equals(parentWindow))
+            for (String temp : childWindows) {
+                driver.switchTo().window(temp);
+            }
+        System.out.println(driver.getCurrentUrl());
+        Thread.sleep(8000);
+        test = extent.createTest("Step01: Verify whether user is able to export an experience");
+        WebElement expName = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("experienceName")));
+        String name = "ExportExp";
+        expName.sendKeys(name);
+        WebElement description = driver.findElement(By.id("experienceDescription"));
+        description.sendKeys("test");
+        Thread.sleep(2000);
+        WebElement startBuilding = driver.findElement(By.xpath("//button[text()='start building']"));
+        startBuilding.click();
+        Thread.sleep(15000);
+        WebElement closeIcon = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//span[@class='OnboardingTipsDialog_closeIcon__oqjbk']")));
+        closeIcon.click();
+        Thread.sleep(3000);
+        WebElement publish = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//button[contains(@class,'MuiButtonBase-root')])[2]")));
+        publish.click();
+        Thread.sleep(9000);
+        WebElement closeicon2 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span[class='PublishExperienceSuccessDialog_closeIcon__bmK3D']")));
+        closeicon2.click();
+        WebElement hamburger = driver.findElement(By.id("editor-menu-button"));
+        hamburger.click();
+        WebElement export = driver.findElement(By.xpath("//span[text()='Export']"));
+        export.click();
+        Thread.sleep(2000);
+        WebElement exportPopup = driver.findElement(By.xpath("//span[text()='EXPORT']"));
+        exportPopup.click();
+        Thread.sleep(2000);
+        driver.switchTo().window(parentWindow);
+        driver.navigate().to("https://carear-us-qa.web.app/#/admin/company");
+        WebElement auditLog = driver.findElement(By.xpath("//h6[text()='Audit Logs']"));
+        auditLog.click();
+        Thread.sleep(15000);
+
+        test = extent.createTest("Step02", "Verify whether date and day is displayed or not");
+        WebElement date = driver.findElement(By.xpath("(//div[@class='style_date__UsvaQ'])[1]"));
+        boolean dateStatus = date.isDisplayed();
+        Assert.assertTrue(dateStatus);
+        String ss3 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+        test.addScreenCaptureFromBase64String(ss3);
+        //
+        test = extent.createTest("Step03", "Verify whether time is displayed or not");
+        WebElement time = driver.findElement(By.xpath("(//div[@class='style_dateTime__I2bxo'])[1]"));
+        boolean timeStatus = time.isDisplayed();
+        Assert.assertTrue(timeStatus);
+        String ss4 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+        test.addScreenCaptureFromBase64String(ss4);
+        //
+        test = extent.createTest("Step04", "Verify whether username is displayed or not");
+        WebElement user = driver.findElement(By.xpath("(//tbody//tr//td[2]//div)[1]"));
+        if (user.getText().contains(testUser)) {
+            String username = user.getText();
+            softAssert.assertEquals(username, testUser);
+        }
+        String ss5 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+        test.addScreenCaptureFromBase64String(ss5);
+        WebElement eventWait = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("(//tbody//tr//td[3]//div)[1]")));
+        //
+        test = extent.createTest("Step06", "Verify whether event category is displayed as Experiences");
+        WebElement event = driver.findElement(By.xpath("(//tbody//tr//td[3]//div)[1]"));
+        String eventString = event.getText();
+        Assert.assertEquals(eventString, "Experiences");
+        String ss6 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+        test.addScreenCaptureFromBase64String(ss6);
+
+        //
+        test = extent.createTest("Step07", "Verify whether event description is displayed as Experience exported");
+        WebElement eventDescription = driver.findElement(By.xpath("(//td[contains(text(),'Experience exported')])[1]"));
+        String expectedDescription = eventDescription.getText();
+        Assert.assertEquals(expectedDescription, "Experience exported: " +name);
+        String ss7 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+        test.addScreenCaptureFromBase64String(ss7);
+
+        //
+        Thread.sleep(5000);
+        test = extent.createTest("Step08", "Verify whether access details is displayed or not");
+        WebElement accessDetails = driver.findElement(By.xpath("(//tbody//tr//td[5])[1]"));
+        String accessDescription = accessDetails.getText();
+        softAssert.assertEquals(accessDescription, "Desktop, Edge 129.0.0.0");
+        String ss8 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+        test.addScreenCaptureFromBase64String(ss8);
+
+
+    }
 }

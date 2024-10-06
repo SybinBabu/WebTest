@@ -2,7 +2,7 @@
     <test name = "sample4">
         <parameter name = "userPicker" value ="sybin.xerox+18@gmail.com"/>
         <classes>
-            <class name = "org.example.AIgen" />
+            <class name = "org.example.src.main.java.org.example.WebTest" />
         </classes>
   </test>
 </suite>
